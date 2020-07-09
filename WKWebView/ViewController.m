@@ -155,16 +155,16 @@
          [self.view addSubview:_webView];
          */
         
-        // 创建配置
-        WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
         // 创建UserContentController（提供JavaScript向webView发送消息的方法）
         WKUserContentController* userContent = [[WKUserContentController alloc] init];
         // 添加消息处理，注意：self指代的对象需要遵守WKScriptMessageHandler协议，结束时需要移除
         [userContent addScriptMessageHandler:self name:@"NativeMethod"];
+        // 创建配置
+        WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
         // 将UserConttentController设置到配置文件
         config.userContentController = userContent;
         // 高端的自定义配置创建WKWebView
-        _webView = [[WKWebView alloc] initWithFrame:[UIScreen mainScreen].bounds configuration:config];
+        _webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:config];
         _webView.navigationDelegate = self;
         _webView.UIDelegate = self;
         [self.view addSubview:_webView];
