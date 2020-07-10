@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) WKWebView *webView;
 
+@property (nonatomic, assign) BOOL shouldStartLoadWithRequest;
+
 @end
 
 @implementation ViewController
@@ -51,7 +53,12 @@
 // 1 在发送请求之前，决定是否跳转
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     NSLog(@"1-------在发送请求之前，决定是否跳转  -->%@",navigationAction.request);
-    decisionHandler(WKNavigationActionPolicyAllow);
+    if (self.shouldStartLoadWithRequest) {
+        decisionHandler(WKNavigationActionPolicyAllow);
+    }else{
+        decisionHandler(WKNavigationActionPolicyCancel);
+    }
+    
 }
 
 // 2 页面开始加载时调用
